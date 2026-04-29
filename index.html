@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام توليد الدعوات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <img src="assets/logo.png" alt="شعار المركز" class="logo" id="logoPreview">
+                <div class="logo-placeholder" id="logoPlaceholder">
+                    <span>📎 اضغط هنا لرفع الشعار</span>
+                    <small>PNG بخلفية شفافة</small>
+                </div>
+                <input type="file" id="logoInput" accept="image/png,image/jpeg,image/jpg" hidden>
+            </div>
+            <h1>🎯 نظام توليد الدعوات</h1>
+            <p class="subtitle">أضف البيانات وأنتج دعوات احترافية بضغطة زر</p>
+        </header>
+
+        <!-- Form Section -->
+        <div class="form-card">
+            <h2>📝 بيانات المناسبة</h2>
+
+            <div class="form-group">
+                <label for="eventTitle">عنوان المناسبة *</label>
+                <input type="text" id="eventTitle" placeholder="مثال: حلقة نقاش: مستقبل التراث" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventDate">التاريخ *</label>
+                    <input type="text" id="eventDate" placeholder="مثال: الخميس 15 رمضان 1447" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventTime">الوقت *</label>
+                    <input type="text" id="eventTime" placeholder="مثال: 8:00 مساءً" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eventLocation">المكان *</label>
+                <input type="text" id="eventLocation" placeholder="مثال: قاعة الأمير سلطان - المركز الثقافي" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDetails">تفاصيل إضافية (اختياري)</label>
+                <input type="text" id="eventDetails" placeholder="مثال: حضوركم يشرفنا">
+            </div>
+
+            <div class="form-group">
+                <label for="namesList">قائمة المدعوين * <small>(اسم في كل سطر)</small></label>
+                <textarea id="namesList" rows="8" placeholder="أحمد محمد&#10;خالد عبدالله&#10;فهد السالم&#10;..." required></textarea>
+                <div class="names-count" id="namesCount">0 اسم</div>
+            </div>
+
+            <div class="form-group">
+                <label>خيارات التصميم</label>
+                <div class="options-grid">
+                    <div class="option-item">
+                        <label for="fontSelect">الخط</label>
+                        <select id="fontSelect">
+                            <option value="Cairo">Cairo (كايرو)</option>
+                            <option value="Tajawal">Tajawal (تجوال)</option>
+                            <option value="Amiri">Amiri (أميري)</option>
+                        </select>
+                    </div>
+                    <div class="option-item">
+                        <label for="textColor">لون النص</label>
+                        <input type="color" id="textColor" value="#1a1a2e">
+                    </div>
+                    <div class="option-item">
+                        <label for="accentColor">لون التمييز</label>
+                        <input type="color" id="accentColor" value="#c9a84c">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-preview" id="previewBtn" type="button">
+                    👁️ معاينة الدعوة
+                </button>
+                <button class="btn btn-generate" id="generateBtn" type="button">
+                    🚀 توليد كل الدعوات
+                </button>
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section" id="previewSection" style="display: none;">
+            <h2>👁️ معاينة الدعوة</h2>
+            <div class="preview-container">
+                <div class="invite-card" id="inviteCard">
+                    <div class="invite-bg">
+                        <img src="assets/background.png" alt="خلفية" class="bg-image" id="bgImage">
+                        <div class="bg-fallback" id="bgFallback"></div>
+                    </div>
+
+                    <div class="invite-content">
+                        <div class="invite-header">
+                            <img src="assets/logo.png" alt="" class="invite-logo" id="inviteLogo">
+                            <div class="invite-badge">دعوة</div>
+                        </div>
+
+                        <div class="invite-body">
+                            <div class="guest-name" id="previewGuestName">أحمد محمد</div>
+
+                            <div class="event-title" id="previewEventTitle">حلقة نقاش: مستقبل التراث</div>
+
+                            <div class="event-details">
+                                <div class="detail-item">
+                                    <span class="detail-icon">📅</span>
+                                    <span id="previewDate">الخميس 15 رمضان 1447</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-icon">🕐</span>
+                                    <span id="previewTime">8:00 مساءً</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-icon">📍</span>
+                                    <span id="previewLocation">قاعة الأمير سلطان</span>
+                                </div>
+                            </div>
+
+                            <div class="invite-footer" id="previewDetails">حضوركم يشرفنا</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-actions">
+                <button class="btn btn-download" id="downloadSingleBtn">
+                    💾 تحميل هذه المعاينة
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-card">
+                <h3>⏳ جاري توليد الدعوات...</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text" id="progressText">0 / 0</div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-card">
+                <h2>✅ تم التوليد بنجاح!</h2>
+                <p class="results-info" id="resultsInfo">تم توليد 10 دعوات</p>
+
+                <div class="results-actions">
+                    <button class="btn btn-zip" id="downloadZipBtn">
+                        📦 تحميل كل الدعوات (ZIP)
+                    </button>
+                    <button class="btn btn-reset" id="resetBtn">
+                        🔄 إنشاء دعوات جديدة
+                    </button>
+                </div>
+
+                <div class="gallery" id="gallery"></div>
+            </div>
+        </div>
+
+        <!-- Hidden canvas container for generation -->
+        <div id="generationContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
