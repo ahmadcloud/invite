@@ -1,5 +1,5 @@
 // ============================================
-// Invitation Generator - Main Script
+// Invitation Generator V2 - Clean Design
 // ============================================
 
 // DOM Elements
@@ -10,12 +10,8 @@ const eventTitle = document.getElementById('eventTitle');
 const eventDate = document.getElementById('eventDate');
 const eventTime = document.getElementById('eventTime');
 const eventLocation = document.getElementById('eventLocation');
-const eventDetails = document.getElementById('eventDetails');
 const namesList = document.getElementById('namesList');
 const namesCount = document.getElementById('namesCount');
-const fontSelect = document.getElementById('fontSelect');
-const textColor = document.getElementById('textColor');
-const accentColor = document.getElementById('accentColor');
 const previewBtn = document.getElementById('previewBtn');
 const generateBtn = document.getElementById('generateBtn');
 const previewSection = document.getElementById('previewSection');
@@ -24,7 +20,6 @@ const previewEventTitle = document.getElementById('previewEventTitle');
 const previewDate = document.getElementById('previewDate');
 const previewTime = document.getElementById('previewTime');
 const previewLocation = document.getElementById('previewLocation');
-const previewDetails = document.getElementById('previewDetails');
 const downloadSingleBtn = document.getElementById('downloadSingleBtn');
 const progressSection = document.getElementById('progressSection');
 const progressBar = document.getElementById('progressBar');
@@ -37,7 +32,6 @@ const gallery = document.getElementById('gallery');
 const generationContainer = document.getElementById('generationContainer');
 const bgImage = document.getElementById('bgImage');
 const bgFallback = document.getElementById('bgFallback');
-const inviteLogo = document.getElementById('inviteLogo');
 
 // State
 let generatedImages = [];
@@ -57,7 +51,6 @@ logoInput.addEventListener('change', (e) => {
             logoPreview.src = currentLogo;
             logoPreview.classList.add('active');
             logoPlaceholder.style.display = 'none';
-            inviteLogo.src = currentLogo;
         };
         reader.readAsDataURL(file);
     }
@@ -76,23 +69,13 @@ namesList.addEventListener('input', () => {
 // ============================================
 function updatePreview(name = 'أحمد محمد') {
     previewGuestName.textContent = name || 'أحمد محمد';
-    previewEventTitle.textContent = eventTitle.value || 'عنوان المناسبة';
+    previewEventTitle.textContent = eventTitle.value || 'اسم الفعالية';
     previewDate.textContent = eventDate.value || 'التاريخ';
     previewTime.textContent = eventTime.value || 'الوقت';
     previewLocation.textContent = eventLocation.value || 'المكان';
-    previewDetails.textContent = eventDetails.value || '';
-    previewDetails.style.display = eventDetails.value ? 'block' : 'none';
-
-    // Update font
-    previewGuestName.style.fontFamily = fontSelect.value;
-    previewEventTitle.style.fontFamily = fontSelect.value;
-
-    // Update colors
-    previewGuestName.style.color = accentColor.value;
-    previewEventTitle.style.color = textColor.value;
 }
 
-[eventTitle, eventDate, eventTime, eventLocation, eventDetails, fontSelect, textColor, accentColor].forEach(el => {
+[eventTitle, eventDate, eventTime, eventLocation].forEach(el => {
     el.addEventListener('input', () => updatePreview());
 });
 
@@ -134,7 +117,7 @@ downloadSingleBtn.addEventListener('click', async () => {
 generateBtn.addEventListener('click', async () => {
     // Validation
     if (!eventTitle.value.trim()) {
-        alert('❌ الرجاء إدخال عنوان المناسبة');
+        alert('❌ الرجاء إدخال اسم الفعالية');
         eventTitle.focus();
         return;
     }
@@ -170,58 +153,46 @@ generateBtn.addEventListener('click', async () => {
     generatedImages = [];
     const total = names.length;
 
-    // Create generation card (hidden)
+    // Create generation card (hidden, full HD)
     const genCard = document.createElement('div');
     genCard.className = 'invite-card';
     genCard.style.width = '1080px';
     genCard.style.height = '1920px';
     genCard.style.position = 'absolute';
     genCard.style.left = '-9999px';
+    genCard.style.borderRadius = '0';
     genCard.innerHTML = `
         <div class="invite-bg">
             <img src="${bgImage.src}" class="bg-image active" style="display: block;">
             <div class="bg-fallback" style="display: none;"></div>
         </div>
-        <div class="invite-content" style="padding: 90px 75px;">
-            <div class="invite-header" style="margin-bottom: 60px;">
-                <img src="${currentLogo || 'assets/logo.png'}" class="invite-logo" style="max-width: 210px; max-height: 150px;">
-                <div class="invite-badge" style="padding: 18px 54px; font-size: 2.7rem; border-radius: 60px;">دعوة</div>
-            </div>
-            <div class="invite-body" style="gap: 45px;">
-                <div class="guest-name" style="font-size: 4.8rem;"></div>
-                <div class="event-title" style="font-size: 3.3rem;"></div>
-                <div class="event-details" style="gap: 24px; margin-top: 30px;">
-                    <div class="detail-item" style="padding: 24px 45px; font-size: 2.55rem; border-radius: 30px;">
-                        <span class="detail-icon" style="font-size: 3rem;">📅</span>
-                        <span class="detail-date"></span>
-                    </div>
-                    <div class="detail-item" style="padding: 24px 45px; font-size: 2.55rem; border-radius: 30px;">
-                        <span class="detail-icon" style="font-size: 3rem;">🕐</span>
-                        <span class="detail-time"></span>
-                    </div>
-                    <div class="detail-item" style="padding: 24px 45px; font-size: 2.55rem; border-radius: 30px;">
-                        <span class="detail-icon" style="font-size: 3rem;">📍</span>
-                        <span class="detail-location"></span>
-                    </div>
+        <div class="invite-content" style="padding: 540px 120px 300px 120px;">
+            <div class="guest-name" style="font-size: 5.4rem; margin-bottom: 24px;"></div>
+            <div class="event-title" style="font-size: 3.45rem; margin-bottom: 90px; padding: 0 30px;"></div>
+            <div class="event-details" style="gap: 30px; padding-bottom: 60px;">
+                <div class="detail-item" style="padding: 30px 54px; font-size: 2.7rem; border-radius: 36px; gap: 30px;">
+                    <span class="detail-icon" style="font-size: 3.3rem;">📅</span>
+                    <span class="detail-date"></span>
                 </div>
-                <div class="invite-footer" style="margin-top: 45px; font-size: 2.7rem;"></div>
+                <div class="detail-item" style="padding: 30px 54px; font-size: 2.7rem; border-radius: 36px; gap: 30px;">
+                    <span class="detail-icon" style="font-size: 3.3rem;">🕐</span>
+                    <span class="detail-time"></span>
+                </div>
+                <div class="detail-item" style="padding: 30px 54px; font-size: 2.7rem; border-radius: 36px; gap: 30px;">
+                    <span class="detail-icon" style="font-size: 3.3rem;">📍</span>
+                    <span class="detail-location"></span>
+                </div>
             </div>
         </div>
     `;
     generationContainer.appendChild(genCard);
 
-    // Update styles for generation
+    // Get elements
     const genGuestName = genCard.querySelector('.guest-name');
     const genEventTitle = genCard.querySelector('.event-title');
     const genDate = genCard.querySelector('.detail-date');
     const genTime = genCard.querySelector('.detail-time');
     const genLocation = genCard.querySelector('.detail-location');
-    const genFooter = genCard.querySelector('.invite-footer');
-
-    genGuestName.style.fontFamily = fontSelect.value;
-    genEventTitle.style.fontFamily = fontSelect.value;
-    genGuestName.style.color = accentColor.value;
-    genEventTitle.style.color = textColor.value;
 
     // Generate for each name
     for (let i = 0; i < total; i++) {
@@ -239,16 +210,9 @@ generateBtn.addEventListener('click', async () => {
         genTime.textContent = eventTime.value;
         genLocation.textContent = eventLocation.value;
 
-        if (eventDetails.value.trim()) {
-            genFooter.textContent = eventDetails.value;
-            genFooter.style.display = 'block';
-        } else {
-            genFooter.style.display = 'none';
-        }
-
-        // Wait for fonts and images
+        // Wait for fonts
         await document.fonts.ready;
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 150));
 
         // Capture
         try {
@@ -327,7 +291,6 @@ resetBtn.addEventListener('click', () => {
         eventDate.value = '';
         eventTime.value = '';
         eventLocation.value = '';
-        eventDetails.value = '';
         namesList.value = '';
         namesCount.textContent = '0 اسم';
         generatedImages = [];

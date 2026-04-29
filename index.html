@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام توليد الدعوات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>نظام توليد الدعوات - مركز البحوث</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -17,21 +17,21 @@
             <div class="logo-section">
                 <img src="assets/logo.png" alt="شعار المركز" class="logo" id="logoPreview">
                 <div class="logo-placeholder" id="logoPlaceholder">
-                    <span>📎 اضغط هنا لرفع الشعار</span>
-                    <small>PNG بخلفية شفافة</small>
+                    <span>📎 اضغط لرفع الشعار</span>
+                    <small>PNG شفاف</small>
                 </div>
                 <input type="file" id="logoInput" accept="image/png,image/jpeg,image/jpg" hidden>
             </div>
             <h1>🎯 نظام توليد الدعوات</h1>
-            <p class="subtitle">أضف البيانات وأنتج دعوات احترافية بضغطة زر</p>
+            <p class="subtitle">أضف البيانات وأنتج دعوات احترافية</p>
         </header>
 
         <!-- Form Section -->
         <div class="form-card">
-            <h2>📝 بيانات المناسبة</h2>
+            <h2>📝 بيانات الدعوة</h2>
 
             <div class="form-group">
-                <label for="eventTitle">عنوان المناسبة *</label>
+                <label for="eventTitle">اسم الفعالية *</label>
                 <input type="text" id="eventTitle" placeholder="مثال: حلقة نقاش: مستقبل التراث" required>
             </div>
 
@@ -52,36 +52,9 @@
             </div>
 
             <div class="form-group">
-                <label for="eventDetails">تفاصيل إضافية (اختياري)</label>
-                <input type="text" id="eventDetails" placeholder="مثال: حضوركم يشرفنا">
-            </div>
-
-            <div class="form-group">
                 <label for="namesList">قائمة المدعوين * <small>(اسم في كل سطر)</small></label>
                 <textarea id="namesList" rows="8" placeholder="أحمد محمد&#10;خالد عبدالله&#10;فهد السالم&#10;..." required></textarea>
                 <div class="names-count" id="namesCount">0 اسم</div>
-            </div>
-
-            <div class="form-group">
-                <label>خيارات التصميم</label>
-                <div class="options-grid">
-                    <div class="option-item">
-                        <label for="fontSelect">الخط</label>
-                        <select id="fontSelect">
-                            <option value="Cairo">Cairo (كايرو)</option>
-                            <option value="Tajawal">Tajawal (تجوال)</option>
-                            <option value="Amiri">Amiri (أميري)</option>
-                        </select>
-                    </div>
-                    <div class="option-item">
-                        <label for="textColor">لون النص</label>
-                        <input type="color" id="textColor" value="#1a1a2e">
-                    </div>
-                    <div class="option-item">
-                        <label for="accentColor">لون التمييز</label>
-                        <input type="color" id="accentColor" value="#c9a84c">
-                    </div>
-                </div>
             </div>
 
             <div class="actions">
@@ -105,32 +78,22 @@
                     </div>
 
                     <div class="invite-content">
-                        <div class="invite-header">
-                            <img src="assets/logo.png" alt="" class="invite-logo" id="inviteLogo">
-                            <div class="invite-badge">دعوة</div>
-                        </div>
+                        <div class="guest-name" id="previewGuestName">أحمد محمد</div>
+                        <div class="event-title" id="previewEventTitle">حلقة نقاش: مستقبل التراث</div>
 
-                        <div class="invite-body">
-                            <div class="guest-name" id="previewGuestName">أحمد محمد</div>
-
-                            <div class="event-title" id="previewEventTitle">حلقة نقاش: مستقبل التراث</div>
-
-                            <div class="event-details">
-                                <div class="detail-item">
-                                    <span class="detail-icon">📅</span>
-                                    <span id="previewDate">الخميس 15 رمضان 1447</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-icon">🕐</span>
-                                    <span id="previewTime">8:00 مساءً</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-icon">📍</span>
-                                    <span id="previewLocation">قاعة الأمير سلطان</span>
-                                </div>
+                        <div class="event-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">📅</span>
+                                <span id="previewDate">الخميس 15 رمضان 1447</span>
                             </div>
-
-                            <div class="invite-footer" id="previewDetails">حضوركم يشرفنا</div>
+                            <div class="detail-item">
+                                <span class="detail-icon">🕐</span>
+                                <span id="previewTime">8:00 مساءً</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">📍</span>
+                                <span id="previewLocation">قاعة الأمير سلطان</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -173,7 +136,7 @@
             </div>
         </div>
 
-        <!-- Hidden canvas container for generation -->
+        <!-- Hidden generation container -->
         <div id="generationContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
     </div>
 

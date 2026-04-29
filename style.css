@@ -1,19 +1,17 @@
 /* ============================================
-   Invitation Generator - Styles
+   Invitation Generator V2 - Clean Design
+   Matching user's original invitation style
    ============================================ */
 
 :root {
-    --primary: #1a1a2e;
-    --secondary: #16213e;
+    --primary: #1a2332;
+    --secondary: #252f3e;
     --accent: #c9a84c;
     --accent-light: #e8d5a3;
     --text: #f1f1f1;
-    --text-dark: #1a1a2e;
     --card-bg: rgba(255, 255, 255, 0.05);
     --border: rgba(255, 255, 255, 0.1);
     --success: #4caf50;
-    --warning: #ff9800;
-    --error: #f44336;
 }
 
 * {
@@ -23,7 +21,7 @@
 }
 
 body {
-    font-family: 'Cairo', 'Tajawal', sans-serif;
+    font-family: 'Cairo', sans-serif;
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     min-height: 100vh;
     color: var(--text);
@@ -142,9 +140,7 @@ body {
 }
 
 input[type="text"],
-input[type="file"],
-textarea,
-select {
+textarea {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid var(--border);
@@ -157,8 +153,7 @@ select {
 }
 
 input[type="text"]:focus,
-textarea:focus,
-select:focus {
+textarea:focus {
     outline: none;
     border-color: var(--accent);
     background: rgba(255, 255, 255, 0.12);
@@ -180,41 +175,6 @@ textarea {
     font-size: 0.85rem;
     opacity: 0.8;
     color: var(--accent);
-}
-
-/* Options Grid */
-.options-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.option-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.option-item label {
-    font-size: 0.85rem;
-    margin-bottom: 0;
-}
-
-input[type="color"] {
-    height: 45px;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 5px;
-}
-
-select {
-    cursor: pointer;
-    height: 45px;
-}
-
-select option {
-    background: var(--primary);
-    color: var(--text);
 }
 
 /* Buttons */
@@ -293,7 +253,10 @@ select option {
     margin-bottom: 20px;
 }
 
-/* Invitation Card - WhatsApp Size 1080x1920 */
+/* ============================================
+   INVITATION CARD - Full HD 1080x1920
+   Clean cream/beige design matching user style
+   ============================================ */
 .invite-card {
     width: 360px;
     height: 640px;
@@ -301,7 +264,7 @@ select option {
     overflow: hidden;
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-    background: #fff;
+    background: #f5f0e8;
     direction: rtl;
 }
 
@@ -328,22 +291,24 @@ select option {
 .bg-fallback {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(180deg, #f5f0e8 0%, #ede6d6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.bg-fallback::after {
+/* Subtle pattern overlay */
+.bg-fallback::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(201, 168, 76, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(201, 168, 76, 0.1) 0%, transparent 50%);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(201, 168, 76, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(201, 168, 76, 0.03) 0%, transparent 50%);
+    background-size: 60px 60px;
 }
 
 .invite-content {
@@ -352,95 +317,64 @@ select option {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 30px 25px;
-    color: var(--text-dark);
-}
-
-.invite-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.invite-logo {
-    max-width: 70px;
-    max-height: 50px;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-}
-
-.invite-badge {
-    background: linear-gradient(135deg, var(--accent), #a88b3a);
-    color: var(--primary);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-weight: 900;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 15px rgba(201, 168, 76, 0.4);
-}
-
-.invite-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 15px;
+    padding: 180px 40px 100px 40px;
+    color: #1a2332;
 }
 
+/* Guest Name - Large, prominent */
 .guest-name {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    color: var(--accent);
-    text-shadow: 0 2px 10px rgba(201, 168, 76, 0.3);
+    color: #1a2332;
+    margin-bottom: 8px;
     line-height: 1.3;
     word-wrap: break-word;
     max-width: 100%;
+    font-family: 'Cairo', sans-serif;
 }
 
+/* Event Title */
 .event-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #fff;
-    line-height: 1.4;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    line-height: 1.5;
     word-wrap: break-word;
     max-width: 100%;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    font-family: 'Cairo', sans-serif;
+    padding: 0 10px;
 }
 
+/* Event Details - Bottom section */
 .event-details {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: auto;
+    padding-bottom: 20px;
 }
 
 .detail-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 15px;
-    border-radius: 10px;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #34495e;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 10px 18px;
+    border-radius: 12px;
     backdrop-filter: blur(5px);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    font-family: 'Cairo', sans-serif;
 }
 
 .detail-icon {
-    font-size: 1rem;
-}
-
-.invite-footer {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: var(--accent-light);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    font-size: 1.1rem;
 }
 
 /* Preview Actions */
@@ -577,10 +511,6 @@ select option {
         grid-template-columns: 1fr;
     }
 
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-
     .actions {
         flex-direction: column;
     }
@@ -594,12 +524,16 @@ select option {
         height: 533px;
     }
 
+    .invite-content {
+        padding: 150px 30px 80px 30px;
+    }
+
     .guest-name {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
 
     .event-title {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 }
 
